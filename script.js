@@ -134,6 +134,15 @@ if (heroCanvas) {
     holder.scale.setScalar(4.9 / Math.max(size.x, size.y, size.z));
     holder.add(car);
     scene.add(holder);
+
+    // Doar pe mobil: pornește din profil (mașina văzută din lateral), apoi se rotește de aici
+    if (matchMedia("(max-width: 960px)").matches) {
+      const SIDE = 1;            // pune -1 dacă vrei mașina văzută din partea opusă (cu fața în stânga)
+      const dist = 6.7, height = 1.2;
+      const alongX = size.x >= size.z; // axa pe care e lungă mașina; camera se pune perpendicular
+      camera.position.set(alongX ? 0 : dist * SIDE, height, alongX ? dist * SIDE : 0);
+      controls.update();
+    }
     document.getElementById("heroLoading")?.remove();
   }, undefined, (err) => {
     console.error("Eroare la încărcarea mașinii 3D:", err);
