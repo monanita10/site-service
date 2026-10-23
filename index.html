@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ZUZI SERV MCQUEEN | Service auto și spălătorie 24/24, Jitaru</title>
+  <meta name="description" content="Piese auto, mecanică, diagnoză, vulcanizare, geometrie roți 3D și spălătorie non-stop în Jitaru, Scornicești, jud. Olt.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">
+  { "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/" } }
+  </script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="t1" viewBox="0 0 48 48"><path d="M33 6a10 10 0 0 0-9 13L7 36a4.5 4.5 0 0 0 6.400 6.400L30 25a10 10 0 0 0 13-9l-7 6-6-1-1-6z"/></symbol>
+  <symbol id="t2" viewBox="0 0 48 48"><path d="M5 43l17-17"/><rect x="24" y="7" width="10" height="26" rx="3" transform="rotate(45 29 20)"/></symbol>
+  <symbol id="t3" viewBox="0 0 48 48"><circle cx="24" cy="24" r="12"/><circle cx="24" cy="24" r="4.500"/><circle cx="24" cy="24" r="18.500" stroke-width="5" stroke-dasharray="5.8 5.8"/></symbol>
+  <symbol id="n1" viewBox="0 0 48 48"><path d="M24 5l16 9v20l-16 9-16-9V14z"/><circle cx="24" cy="24" r="6"/></symbol>
+  <symbol id="h1" viewBox="0 0 48 48"><rect x="7" y="5" width="30" height="13" rx="3"/><rect x="17" y="18" width="9" height="26" rx="3"/><path d="M37 8l6-2v10l-6-2"/></symbol>
+  <symbol id="p1" viewBox="0 0 48 48"><rect x="19" y="3" width="10" height="6" rx="1"/><rect x="20" y="9" width="8" height="14" rx="2"/><path d="M15 23h18v6H15zM20 29v10h8V29M24 39v6"/></symbol>
+  <symbol id="w1" viewBox="0 0 48 48"><circle cx="24" cy="24" r="19"/><circle cx="24" cy="24" r="11"/><circle cx="24" cy="24" r="3"/><path d="M24 13v8M24 27v8M13 24h8M27 24h8"/></symbol>
+</svg>
+
+<header class="site-header">
+  <div class="nav">
+    <a href="#acasa" class="logo"><img src="logo.png" alt="" class="logo__img" onerror="this.remove()"><span>ZUZI SERV <em>McQueen</em></span></a>
+    <button class="burger" id="burger" aria-label="Meniu" aria-expanded="false" aria-controls="menu"><i></i><i></i><i></i></button>
+    <ul class="menu" id="menu">
+      <li><a href="#servicii">Servicii</a></li>
+      <li><a href="#geometrie">Geometrie 3D</a></li>
+      <li><a href="#spalatorie">Spălătorie</a></li>
+      <li><a href="#despre">Despre noi</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero" id="acasa">
+    <div class="container hero__grid">
+      <div class="hero__text">
+        <h1>PLECI CU MAȘINA <span>CA NOUĂ.</span></h1>
+        <p class="lead">De la cea mai mică reparație până la un luciu impecabil. Service auto și spălătorie non-stop, direct la drumul tău.</p>
+        <div class="actions">
+          <a class="btn btn--ghost" href="#despre">Despre noi</a>
+          <a class="btn" href="https://service-auto-frontend.onrender.com/" target="_blank" rel="noopener">Programează o vizită</a>
+        </div>
+      </div>
+      <div class="hero__stage">
+        <canvas id="heroCanvas" aria-label="Mașina 3D: trage cu mouse-ul ca s-o rotești"></canvas>
+        <span class="hero__loading" id="heroLoading">Se încarcă mașina…</span>
+        <p class="hero__hint">↔ Trage mașina ca s-o rotești</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="tools" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#t1"/></svg><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#n1"/></svg><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#h1"/></svg><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#t2"/></svg><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#t3"/></svg><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#p1"/></svg><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#w1"/></svg><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#n1"/></svg><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#t1"/></svg></div>
+
+  <!-- SERVICII -->
+  <section class="section" id="servicii">
+    <div class="container">
+      <div class="service-head reveal">
+        <p class="tag">Service auto</p>
+        <h2>Tot ce are nevoie mașina ta</h2>
+      </div>
+    </div>
+    <div class="container split split--service">
+      <div class="reveal"><div class="job"><div class="job__head"><span>Fișă de lucru</span><span>ZUZI SERV</span></div><ul class="svc-list"><li class="svc"><span class="svc__no">01</span><div><h3>Piese auto</h3><p>Te ajutăm să alegi piesele potrivite pentru mașina ta și le montăm chiar la noi.</p></div><span class="svc__arrow">→</span></li><li class="svc"><span class="svc__no">02</span><div><h3>Mecanică</h3><p>Revizii, ulei și filtre, frâne, distribuție, suspensii și evacuare.</p></div><span class="svc__arrow">→</span></li><li class="svc"><span class="svc__no">03</span><div><h3>Diagnoză</h3><p>Citim erorile și verificăm senzorii, ca să știi exact ce are mașina înainte de lucrare.</p></div><span class="svc__arrow">→</span></li><li class="svc"><span class="svc__no">04</span><div><h3>Vulcanizare</h3><p>Montat și echilibrat anvelope, schimb sezonier și reparat pene.</p></div><span class="svc__arrow">→</span></li><li class="svc"><span class="svc__no">05</span><div><h3>Geometrie roți 3D</h3><p>Reglăm unghiurile roților cu aparat 3D, pentru direcție precisă și anvelope uzate uniform.</p></div><span class="svc__arrow">→</span></li></ul></div></div>
+      <div class="squares reveal"><figure class="photo tilt"><img src="poze/11.jpeg" alt="" onerror="this.remove()"></figure><figure class="photo tilt"><img src="poze/chei.jpeg" alt="" onerror="this.remove()"></figure><figure class="photo tilt"><img src="poze/7.jpeg" alt="" onerror="this.remove()"></figure><figure class="photo tilt"><img src="poze/lucru1.jpeg" alt="" onerror="this.remove()"></figure></div>
+    </div>
+  </section>
+
+  <!-- GEOMETRIE 3D -->
+  <section class="section section--dark" id="geometrie">
+    <div class="container split">
+      <div class="geo__stage reveal"><canvas id="geoCanvas" aria-label="Roată 3D cu unghiuri reglabile"></canvas></div>
+      <div class="reveal">
+        <p class="tag tag--light">Geometrie roți 3D</p>
+        <h2>Vezi ce se întâmplă când roțile nu sunt drepte</h2>
+        <p class="muted">Mută cursoarele și urmărește roata. Conturul roșu e poziția corectă. Unghiurile sunt exagerate ca să se vadă.</p>
+        <div class="ctrl"><label for="camber">Cădere (camber) <b id="camberV">2,5°</b></label><input id="camber" type="range" min="-4" max="4" step="0.1" value="2.5"></div>
+        <div class="ctrl"><label for="toe">Convergență (toe) <b id="toeV">-2,0°</b></label><input id="toe" type="range" min="-4" max="4" step="0.1" value="-2"></div>
+        <p class="geo__status" id="geoStatus" aria-live="polite"></p>
+        <button class="btn" id="geoFix" type="button">Reglează cu aparatul 3D</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPĂLĂTORIE -->
+  <section class="section section--red" id="spalatorie">
+    <div class="container">
+      <div class="wash-top">
+        <div class="reveal">
+          <p class="tag tag--light">Spălătorie auto</p>
+          <h2>Speli când ai tu timp, nu când are programul</h2>
+          <p>Spălătoria are 3 boxe, se află în curtea service-ului și funcționează zi și noapte, cu acces direct din DN65.</p>
+          <ul class="chips"><li>Soluție jante</li><li>Spumă fresh</li><li>Spumă activă</li><li>Clătire cu presiune</li><li>Ceară</li><li>Apă cu osmoză</li></ul>
+        </div>
+        <div class="coin-wrap reveal">
+          <div class="coin" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><b class="coin__f">2,5<small>lei</small></b><b class="coin__b">2,5<small>lei</small></b></div>
+          <p><strong>Un jeton = 2,5 lei</strong></p>
+        </div>
+      </div>
+      <div class="strip reveal"><figure class="photo tilt"><img src="poze/spalatorie1.jpeg" alt="Boxă de spălare" onerror="this.remove()"></figure><figure class="photo tilt"><img src="poze/spalatorie2.jpeg" alt="Spumă activă" onerror="this.remove()"></figure></div>
+      <div class="detailing reveal">
+        <figure class="photo tilt"><img src="poze/aspirator.jpeg" alt="Zona de detailing" onerror="this.remove()"><figcaption><b>Detailing</b>Aspiratorul și chiuveta</figcaption></figure>
+        <div>
+          <p class="tag">Zona de detailing</p>
+          <h3>Separat de boxele de spălare</h3>
+          <p>O zonă pentru interior și finisaje, cu tot ce ai nevoie ca mașina să arate ca nouă.</p>
+          <ul class="checks">
+            <li>Aspirator pentru detailing, cu parfum</li>
+            <li>Negru de cauciuc, pentru anvelope</li>
+            <li>Aer comprimat</li>
+            <li>Chiuvetă cu storcător</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="tools" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#t1"/></svg><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#n1"/></svg><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#h1"/></svg><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#t2"/></svg><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#t3"/></svg><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#p1"/></svg><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#w1"/></svg><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#n1"/></svg><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#t1"/></svg></div>
+
+  <!-- DESPRE NOI -->
+  <section class="section" id="despre">
+    <div class="container">
+      <div class="reveal"><p class="tag">Despre noi</p><h2>Povestea ZUZI SERV McQueen</h2></div>
+      <ol class="timeline reveal">
+        <li class="tilt"><time>2019</time><h3>Începutul</h3><p>ZUZI SERV MCQUEEN a apărut pe 16 septembrie 2019 în Jitaru, ca un vis împlinit cu un scop simplu: service auto de încredere.</p></li>
+        <li class="tilt"><time>Ideea</time><h3>De ce „McQueen”</h3><p>Ne plac mașinile, viteza și lucrul bine făcut. Așa a ieșit un loc unde repari și aranjezi mașina în aceeași curte.</p></li>
+        <li class="tilt"><time>24/7</time><h3>Spălătorie non-stop</h3><p>Am adăugat o spălătorie modernă, ca șoferii de pe drumul național s-o găsească deschisă oricând.</p></li>
+      </ol>
+      <dl class="stats reveal">
+        <div class="tilt"><dd>24/7</dd><dt>Spălătorie</dt></div>
+        <div class="tilt"><dd>1</dd><dt>Locație: service și spălătorie</dt></div>
+        <div class="tilt"><dd id="years">7</dd><dt>Ani de experiență</dt></div>
+        <div class="tilt"><dd>DN65</dd><dt>Acces direct la ieșirea din Jitaru</dt></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section section--tint" id="contact">
+    <div class="container split">
+      <div class="reveal">
+        <p class="tag">Contact</p>
+        <h2>Vino la noi</h2>
+        <dl class="info">
+          <dt>Adresă</dt><dd>Str. Alexandru Ioan Cuza, Nr. 2, Sat Jitaru, Oraș Scornicești, Jud. Olt, 235605</dd>
+          <dt>Telefon</dt><dd><a href="tel:+40 770 234 069">770 234 069</a></dd>
+          <dt>Program</dt>
+          <dd><ul class="hours"><li><span>Spălătorie auto</span><b>24/24 non-stop</b></li><li><span>Service auto</span><b>L–V, 09:00–18:00</b></li></ul></dd>
+        </dl>
+        <a class="btn" href="tel:+40770234069">Sună acum</a>
+      </div>
+      <div class="map reveal">
+        <div class="map__bar">
+          <div class="seg" role="group" aria-label="Tip hartă"><button type="button" class="is-on" data-t="m">Hartă</button><button type="button" data-t="k">Satelit</button></div>
+          <div class="map__zoom"><button type="button" data-z="-1" aria-label="Micșorează">−</button><button type="button" data-z="1" aria-label="Mărește">+</button></div>
+        </div>
+        <iframe id="mapFrame" title="Harta ZUZI SERV MCQUEEN" loading="lazy" src="https://www.google.com/maps?q=Strada+Alexandru+Ioan+Cuza+2,+Jitaru,+235605,+Olt,+Romania&z=16&output=embed"></iframe>
+        <div class="map__bar">
+          <a href="https://www.google.com/maps/dir/?api=1&destination=Strada+Alexandru+Ioan+Cuza+2,+Jitaru,+235605" target="_blank" rel="noopener">Direcții →</a>
+          <button type="button" id="copyAddr">Copiază adresa</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container site-footer__grid">
+    <p><strong>SC ZUZI SERV MCQUEEN SRL</strong><br>CUI 41644408 · J28/1054/2019<br>Sat Jitaru, Oraș Scornicești, Jud. Olt</p>
+    <p class="site-footer__copy">Service auto și spălătorie auto 24/24<br>© <span id="yr"></span> ZUZI SERV MCQUEEN. Toate drepturile rezervate.</p>
+  </div>
+  <div class="container"><p class="site-footer__credit">Model 3D: „<a href="https://skfb.ly/pzIpV" target="_blank" rel="noopener">(Pixar Cars Series) Lightning McQueen</a>” de ChoochooLi Models, licențiat sub <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">Creative Commons Attribution 4.0</a>.</p></div>
+</footer>
+
+<script type="module" src="script.js"></script>
+</body>
+</html>
