@@ -35,7 +35,7 @@ h1 { font-size: clamp(3rem, 7vw, 5.4rem); margin-bottom: 22px; }
 h1 span { color: var(--red); }
 h2 { font-size: clamp(2rem, 3.8vw, 3.1rem); margin-bottom: 18px; }
 h3 { font-size: 1.4rem; margin-bottom: 6px; }
-.lead { max-width: 480px; margin-bottom: 34px; font-size: 1.18rem; color: var(--muted); }
+.lead { max-width: 480px; margin-bottom: 34px; font-size: 1.12rem; color: var(--muted); }
 .muted { color: #b9b1b3; }
 .tag { display: inline-block; margin-bottom: 14px; padding: 5px 16px; border-radius: 20px; background: var(--red-soft); color: var(--red-deep); font-size: 0.85rem; font-weight: 600; }
 .tag--light { background: rgba(255, 255, 255, 0.16); color: #fff; }
@@ -104,8 +104,10 @@ h3 { font-size: 1.4rem; margin-bottom: 6px; }
 .service-head { max-width: 720px; margin-bottom: 36px; }
 .split--service { grid-template-columns: 0.86fr 1fr; align-items: stretch; gap: 48px; }
 .split--service > .reveal, .split--service .job { height: 100%; }
-.split--service .squares { align-content: space-between; }
 .squares { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.split--service .squares { align-content: space-between; }
+.carousel, .carousel__stage { display: contents; }
+.carousel__arrow, .carousel__dots { display: none; }
 .job { margin-top: 8px; overflow: hidden; border: 2px solid var(--ink); border-radius: var(--radius-m); background: #fff; }
 .job__head { display: flex; justify-content: space-between; padding: 12px 22px; background: var(--ink); color: #fff; font-family: var(--font-head); font-size: 0.95rem; letter-spacing: 0.12em; text-transform: uppercase; }
 .job__head::after { content: none; }
@@ -124,7 +126,6 @@ h3 { font-size: 1.4rem; margin-bottom: 6px; }
 .svc:hover .svc__arrow { background: var(--red); color: #fff; }
 
 /* Geometrie roți 3D */
-.carousel-dots { display: none; }
 .geo__stage { aspect-ratio: 1 / 1; border-radius: var(--radius-l); background: radial-gradient(circle at 50% 40%, #2c2426, #100d0e); border: 1px solid rgba(255, 255, 255, 0.1); overflow: hidden; }
 #geoCanvas { width: 100%; height: 100%; }
 .ctrl { margin: 22px 0; }
@@ -231,17 +232,20 @@ input[type="range"] { width: 100%; accent-color: var(--red); height: 6px; cursor
   .actions .btn { flex: 1 1 0; min-height: 50px; padding: 12px 10px; font-size: 0.85rem; letter-spacing: 0.04em; line-height: 1.2; text-align: center; }
   .hero__stage { width: 124%; margin: -14vw 0 0 -12%; aspect-ratio: 1.4 / 1; }
 
-  /* Servicii: galerie carusel */
-  .squares { display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; scrollbar-width: none; padding-bottom: 2px; }
+  /* Servicii: carusel poze (doar mobil) */
+  .carousel { display: block; min-width: 0; }
+  .carousel__stage { display: block; position: relative; overflow: hidden; border-radius: var(--radius-m); }
+  .squares { display: flex; gap: 0; overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; scrollbar-width: none; }
   .squares::-webkit-scrollbar { display: none; }
-  .squares .photo { flex: 0 0 86%; aspect-ratio: 4 / 3; scroll-snap-align: start; }
-  .carousel-dots { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: -22px; }
-  .carousel-dots .dots { display: flex; align-items: center; gap: 8px; }
-  .carousel-dots .dot { width: 8px; height: 8px; padding: 0; border: 0; border-radius: 8px; background: rgba(22, 18, 19, 0.22); cursor: pointer; transition: width 0.25s, background 0.25s; }
-  .carousel-dots .dot.is-on { width: 24px; background: var(--red); }
-  .carousel-dots .arrow { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid rgba(22, 18, 19, 0.25); border-radius: 50%; background: #fff; color: var(--ink); font-size: 1.3rem; line-height: 1; cursor: pointer; transition: background 0.25s, color 0.25s, opacity 0.25s; }
-  .carousel-dots .arrow:active { background: var(--red); color: #fff; border-color: var(--red); }
-  .carousel-dots .arrow:disabled { opacity: 0.35; }
+  .squares .photo { flex: 0 0 100%; aspect-ratio: 4 / 3; scroll-snap-align: start; scroll-snap-stop: always; }
+  .squares .tilt { transform: none; }
+  .carousel__arrow { position: absolute; top: 50%; z-index: 2; display: grid; place-items: center; width: 46px; height: 46px; padding: 0; border: 0; border-radius: 50%; background: rgba(22, 18, 19, 0.88); color: #fff; font-size: 1.35rem; line-height: 1; cursor: pointer; translate: 0 -50%; }
+  .carousel__arrow:active { background: var(--red); }
+  .carousel__arrow--prev { left: 12px; }
+  .carousel__arrow--next { right: 12px; }
+  .carousel__dots { display: flex; justify-content: center; gap: 8px; margin-top: 14px; }
+  .carousel__dot { width: 8px; height: 8px; padding: 0; border: 0; border-radius: 8px; background: rgba(22, 18, 19, 0.22); cursor: pointer; transition: width 0.25s, background 0.25s; }
+  .carousel__dot.is-on { width: 24px; background: var(--red); }
 
   /* Geometrie 3D: titlul, apoi roata (landscape), apoi restul */
   #geometrie .split { gap: 0; }
@@ -281,7 +285,7 @@ input[type="range"] { width: 100%; accent-color: var(--red); height: 6px; cursor
   .service-head { margin-bottom: 22px; }
 
   /* Poze */
-  .squares, .strip { grid-template-columns: 1fr; gap: 14px; }
+  .strip { grid-template-columns: 1fr; gap: 14px; }
   .strip { margin-top: 36px; padding-bottom: 0; }
   .detailing .photo { width: 100%; }
 
