@@ -130,14 +130,14 @@ if (heroCanvas) {
     const box = new THREE.Box3().setFromObject(car);
     const size = box.getSize(new THREE.Vector3());
     car.position.sub(box.getCenter(new THREE.Vector3()));
-    const holder = new THREE.Group(); 
-    holder.scale.setScalar((4.9 / Math.max(size.x, size.y, size.z)) * (matchMedia("(max-width: 960px)").matches ? 1 : 0.90)); // marime desktop
+    const holder = new THREE.Group(); // mașina stă singură, fără cerc în spate
+    holder.scale.setScalar((4.9 / Math.max(size.x, size.y, size.z)) * (matchMedia("(max-width: 960px)").matches ? 1 : 0.99)); // desktop: cu 1% mai mică
     holder.add(car);
     scene.add(holder);
 
-    //mobil
+    // Doar pe mobil: pornește din profil (mașina văzută din lateral), apoi se rotește de aici
     if (matchMedia("(max-width: 960px)").matches) {
-      const SIDE = 1;           
+      const SIDE = 1;            // pune -1 dacă vrei mașina văzută din partea opusă (cu fața în stânga)
       const dist = 6.7, height = 1.2;
       const alongX = size.x >= size.z; // axa pe care e lungă mașina; camera se pune perpendicular
       camera.position.set(alongX ? 0 : dist * SIDE, height, alongX ? dist * SIDE : 0);
@@ -235,45 +235,44 @@ if (frame) {
   });
 }
 
-/* ---------- Servicii: carusel de poze (mobil) ---------- */
+/* ---------- Servicii: carusel de poze ---------- */
 const gallery = document.querySelector(".squares");
 if (gallery) {
   const slides = [...gallery.children];
-  const bar = document.createElement("div");
-  bar.className = "carousel-dots";
-  const mkArrow = (label, text) => {
-    const b = document.createElement("button");
-    b.type = "button"; b.className = "arrow"; b.setAttribute("aria-label", label); b.textContent = text;
-    return b;
+  const mk = (tag, cls, attrs = {}) => Object.assign(document.createElement(tag), { className: cls }, attrs);
+  const root = mk("div", "carousel");
+  const stage = mk("div", "carousel__stage");
+  const prev = mk("button", "carousel__arrow carousel__arrow--prev", { type: "button", textContent: "←" });
+  const next = mk("button", "carousel__arrow carousel__arrow--next", { type: "button", textContent: "→" });
+  prev.setAttribute("aria-label", "Poza anterioară");
+  next.setAttribute("aria-label", "Poza următoare");
+  const dots = mk("div", "carousel__dots");
+  dots.setAttribute("aria-hidden", "true");
+
+  gallery.before(root);
+  stage.append(gallery, prev, next);
+  root.append(stage, dots);
+
+  const goTo = (i) => {
+    const n = (i + slides.length) % slides.length;
+    gallery.scrollTo({ left: n * gallery.clientWidth, behavior: reduced ? "auto" : "smooth" });
   };
-  const prev = mkArrow("Poza anterioară", "‹");
-  const next = mkArrow("Poza următoare", "›");
-  const dotsWrap = document.createElement("div");
-  dotsWrap.className = "dots";
-  const left = (el) => el.offsetLeft - gallery.offsetLeft;
-  const goTo = (i) => gallery.scrollTo({ left: left(slides[Math.max(0, Math.min(slides.length - 1, i))]), behavior: "smooth" });
-  let cur = 0;
-  const dots = slides.map((slide, i) => {
-    const b = document.createElement("button");
-    b.type = "button"; b.className = "dot"; b.setAttribute("aria-label", `Poza ${i + 1} din ${slides.length}`);
-    b.addEventListener("click", () => goTo(i));
-    dotsWrap.appendChild(b);
-    return b;
+  const dotBtns = [];
+  slides.forEach((_, i) => {
+    const d = mk("button", "carousel__dot", { type: "button", tabIndex: -1 });
+    d.addEventListener("click", () => goTo(i));
+    dots.append(d); dotBtns.push(d);
   });
-  bar.append(prev, dotsWrap, next);
-  gallery.after(bar);
+
+  let cur = 0;
   prev.addEventListener("click", () => goTo(cur - 1));
   next.addEventListener("click", () => goTo(cur + 1));
   const mark = () => {
-    const atEnd = gallery.scrollLeft + gallery.clientWidth >= gallery.scrollWidth - 4;
-    cur = slides.length - 1;
-    if (!atEnd) cur = slides.reduce((best, s, i) => Math.abs(left(s) - gallery.scrollLeft) < Math.abs(left(slides[best]) - gallery.scrollLeft) ? i : best, 0);
-    dots.forEach((d, i) => d.classList.toggle("is-on", i === cur));
-    prev.disabled = cur === 0;
-    next.disabled = cur === slides.length - 1;
+    cur = Math.max(0, Math.min(slides.length - 1, Math.round(gallery.scrollLeft / (gallery.clientWidth || 1))));
+    dotBtns.forEach((d, i) => d.classList.toggle("is-on", i === cur));
   };
   gallery.addEventListener("scroll", mark, { passive: true });
-  addEventListener("resize", mark);
+  addEventListener("resize", () => { gallery.scrollLeft = cur * gallery.clientWidth; mark(); });
   mark();
 }
 
