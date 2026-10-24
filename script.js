@@ -235,6 +235,32 @@ if (frame) {
   });
 }
 
+/* ---------- Servicii: carusel de poze (mobil) ---------- */
+const gallery = document.querySelector(".squares");
+if (gallery) {
+  const slides = [...gallery.children];
+  const dots = document.createElement("div");
+  dots.className = "carousel-dots";
+  const btns = slides.map((slide, i) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.setAttribute("aria-label", `Poza ${i + 1} din ${slides.length}`);
+    b.addEventListener("click", () => gallery.scrollTo({ left: slide.offsetLeft - gallery.offsetLeft, behavior: "smooth" }));
+    dots.appendChild(b);
+    return b;
+  });
+  gallery.after(dots);
+  const mark = () => {
+    const atEnd = gallery.scrollLeft + gallery.clientWidth >= gallery.scrollWidth - 4;
+    let cur = slides.length - 1;
+    if (!atEnd) cur = slides.reduce((best, s, i) => Math.abs(s.offsetLeft - gallery.offsetLeft - gallery.scrollLeft) < Math.abs(slides[best].offsetLeft - gallery.offsetLeft - gallery.scrollLeft) ? i : best, 0);
+    btns.forEach((b, i) => b.classList.toggle("is-on", i === cur));
+  };
+  gallery.addEventListener("scroll", mark, { passive: true });
+  addEventListener("resize", mark);
+  mark();
+}
+
 /* ---------- Efect 3D la mouse pe carduri ---------- */
 if (matchMedia("(hover: hover)").matches && !reduced) {
   document.querySelectorAll(".tilt").forEach((el) => {
