@@ -130,14 +130,14 @@ if (heroCanvas) {
     const box = new THREE.Box3().setFromObject(car);
     const size = box.getSize(new THREE.Vector3());
     car.position.sub(box.getCenter(new THREE.Vector3()));
-    const holder = new THREE.Group(); // mașina stă singură, fără cerc în spate
-    holder.scale.setScalar(4.9 / Math.max(size.x, size.y, size.z));
+    const holder = new THREE.Group(); 
+    holder.scale.setScalar((4.9 / Math.max(size.x, size.y, size.z)) * (matchMedia("(max-width: 960px)").matches ? 1 : 0.90)); // marime desktop
     holder.add(car);
     scene.add(holder);
 
-    // Doar pe mobil: pornește din profil (mașina văzută din lateral), apoi se rotește de aici
+    //mobil
     if (matchMedia("(max-width: 960px)").matches) {
-      const SIDE = 1;            // pune -1 dacă vrei mașina văzută din partea opusă (cu fața în stânga)
+      const SIDE = 1;           
       const dist = 6.7, height = 1.2;
       const alongX = size.x >= size.z; // axa pe care e lungă mașina; camera se pune perpendicular
       camera.position.set(alongX ? 0 : dist * SIDE, height, alongX ? dist * SIDE : 0);
@@ -239,22 +239,38 @@ if (frame) {
 const gallery = document.querySelector(".squares");
 if (gallery) {
   const slides = [...gallery.children];
-  const dots = document.createElement("div");
-  dots.className = "carousel-dots";
-  const btns = slides.map((slide, i) => {
+  const bar = document.createElement("div");
+  bar.className = "carousel-dots";
+  const mkArrow = (label, text) => {
     const b = document.createElement("button");
-    b.type = "button";
-    b.setAttribute("aria-label", `Poza ${i + 1} din ${slides.length}`);
-    b.addEventListener("click", () => gallery.scrollTo({ left: slide.offsetLeft - gallery.offsetLeft, behavior: "smooth" }));
-    dots.appendChild(b);
+    b.type = "button"; b.className = "arrow"; b.setAttribute("aria-label", label); b.textContent = text;
+    return b;
+  };
+  const prev = mkArrow("Poza anterioară", "‹");
+  const next = mkArrow("Poza următoare", "›");
+  const dotsWrap = document.createElement("div");
+  dotsWrap.className = "dots";
+  const left = (el) => el.offsetLeft - gallery.offsetLeft;
+  const goTo = (i) => gallery.scrollTo({ left: left(slides[Math.max(0, Math.min(slides.length - 1, i))]), behavior: "smooth" });
+  let cur = 0;
+  const dots = slides.map((slide, i) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "dot"; b.setAttribute("aria-label", `Poza ${i + 1} din ${slides.length}`);
+    b.addEventListener("click", () => goTo(i));
+    dotsWrap.appendChild(b);
     return b;
   });
-  gallery.after(dots);
+  bar.append(prev, dotsWrap, next);
+  gallery.after(bar);
+  prev.addEventListener("click", () => goTo(cur - 1));
+  next.addEventListener("click", () => goTo(cur + 1));
   const mark = () => {
     const atEnd = gallery.scrollLeft + gallery.clientWidth >= gallery.scrollWidth - 4;
-    let cur = slides.length - 1;
-    if (!atEnd) cur = slides.reduce((best, s, i) => Math.abs(s.offsetLeft - gallery.offsetLeft - gallery.scrollLeft) < Math.abs(slides[best].offsetLeft - gallery.offsetLeft - gallery.scrollLeft) ? i : best, 0);
-    btns.forEach((b, i) => b.classList.toggle("is-on", i === cur));
+    cur = slides.length - 1;
+    if (!atEnd) cur = slides.reduce((best, s, i) => Math.abs(left(s) - gallery.scrollLeft) < Math.abs(left(slides[best]) - gallery.scrollLeft) ? i : best, 0);
+    dots.forEach((d, i) => d.classList.toggle("is-on", i === cur));
+    prev.disabled = cur === 0;
+    next.disabled = cur === slides.length - 1;
   };
   gallery.addEventListener("scroll", mark, { passive: true });
   addEventListener("resize", mark);
