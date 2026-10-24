@@ -35,7 +35,7 @@ h1 { font-size: clamp(3rem, 7vw, 5.4rem); margin-bottom: 22px; }
 h1 span { color: var(--red); }
 h2 { font-size: clamp(2rem, 3.8vw, 3.1rem); margin-bottom: 18px; }
 h3 { font-size: 1.4rem; margin-bottom: 6px; }
-.lead { max-width: 480px; margin-bottom: 34px; font-size: 1.12rem; color: var(--muted); }
+.lead { max-width: 480px; margin-bottom: 34px; font-size: 1.18rem; color: var(--muted); }
 .muted { color: #b9b1b3; }
 .tag { display: inline-block; margin-bottom: 14px; padding: 5px 16px; border-radius: 20px; background: var(--red-soft); color: var(--red-deep); font-size: 0.85rem; font-weight: 600; }
 .tag--light { background: rgba(255, 255, 255, 0.16); color: #fff; }
@@ -120,8 +120,8 @@ h3 { font-size: 1.4rem; margin-bottom: 6px; }
 .svc__no { font-family: var(--font-head); font-size: 1.6rem; font-weight: 600; color: var(--red); }
 .svc h3 { margin: 0; font-size: 1.5rem; }
 .svc p { color: var(--muted); font-size: 0.98rem; line-height: 1.45; }
-.svc__arrow { color: var(--red); font-size: 1.5rem; transition: transform 0.3s; }
-.svc:hover .svc__arrow { transform: translateX(6px); }
+.svc__arrow { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--red-soft); color: var(--red); font-size: 1.05rem; font-weight: 700; line-height: 1; transition: background 0.25s, color 0.25s; }
+.svc:hover .svc__arrow { background: var(--red); color: #fff; }
 
 /* Geometrie roți 3D */
 .carousel-dots { display: none; }
@@ -153,9 +153,8 @@ input[type="range"] { width: 100%; accent-color: var(--red); height: 6px; cursor
 .coin small { font-size: 1.1rem; font-weight: 600; }
 .coin__f { transform: translateZ(7px); }
 .coin__b { transform: rotateY(180deg) translateZ(7px); }
-.strip { display: grid; grid-template-columns: repeat(2, 1fr); width: min(1080px, 100%); gap: 22px; margin: 72px auto 0; padding-bottom: 24px; }
+.strip { display: grid; grid-template-columns: repeat(2, 1fr); width: 100%; gap: 24px; margin: 72px auto 0; padding-bottom: 0; }
 .strip .photo { aspect-ratio: 4 / 3; }
-.strip .photo:nth-child(even) { translate: 0 24px; }
 .section--red .photo { background: rgba(255, 255, 255, 0.14); border-color: rgba(255, 255, 255, 0.5); }
 .section--red .photo figcaption, .section--red .photo figcaption b { color: #fff; }
 .detailing { display: grid; grid-template-columns: 450px 1fr; gap: 52px; align-items: center; margin-top: 48px; padding: 40px 36px; border-radius: var(--radius-l); background: #fff; color: var(--ink); }
@@ -236,9 +235,13 @@ input[type="range"] { width: 100%; accent-color: var(--red); height: 6px; cursor
   .squares { display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; scrollbar-width: none; padding-bottom: 2px; }
   .squares::-webkit-scrollbar { display: none; }
   .squares .photo { flex: 0 0 86%; aspect-ratio: 4 / 3; scroll-snap-align: start; }
-  .carousel-dots { display: flex; justify-content: center; gap: 8px; margin-top: -22px; }
-  .carousel-dots button { width: 8px; height: 8px; padding: 0; border: 0; border-radius: 8px; background: rgba(22, 18, 19, 0.22); cursor: pointer; transition: width 0.25s, background 0.25s; }
-  .carousel-dots button.is-on { width: 24px; background: var(--red); }
+  .carousel-dots { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: -22px; }
+  .carousel-dots .dots { display: flex; align-items: center; gap: 8px; }
+  .carousel-dots .dot { width: 8px; height: 8px; padding: 0; border: 0; border-radius: 8px; background: rgba(22, 18, 19, 0.22); cursor: pointer; transition: width 0.25s, background 0.25s; }
+  .carousel-dots .dot.is-on { width: 24px; background: var(--red); }
+  .carousel-dots .arrow { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid rgba(22, 18, 19, 0.25); border-radius: 50%; background: #fff; color: var(--ink); font-size: 1.3rem; line-height: 1; cursor: pointer; transition: background 0.25s, color 0.25s, opacity 0.25s; }
+  .carousel-dots .arrow:active { background: var(--red); color: #fff; border-color: var(--red); }
+  .carousel-dots .arrow:disabled { opacity: 0.35; }
 
   /* Geometrie 3D: titlul, apoi roata (landscape), apoi restul */
   #geometrie .split { gap: 0; }
@@ -280,7 +283,6 @@ input[type="range"] { width: 100%; accent-color: var(--red); height: 6px; cursor
   /* Poze */
   .squares, .strip { grid-template-columns: 1fr; gap: 14px; }
   .strip { margin-top: 36px; padding-bottom: 0; }
-  .strip .photo:nth-child(even) { translate: 0; }
   .detailing .photo { width: 100%; }
 
   /* Fișa de lucru */
@@ -289,7 +291,7 @@ input[type="range"] { width: 100%; accent-color: var(--red); height: 6px; cursor
   .svc__no { font-size: 1.1rem; }
   .svc h3 { font-size: 1.1rem; }
   .svc p { font-size: 0.85rem; }
-  .svc__arrow { font-size: 1.1rem; }
+  .svc__arrow { width: 26px; height: 26px; font-size: 0.95rem; }
 
   /* Alte carduri */
   .chips li { padding: 6px 12px; font-size: 0.85rem; }
